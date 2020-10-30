@@ -1,7 +1,7 @@
 {
-    "name": "gatsby-remark-extract-keywords",
+    "name": "gatsby-remark-extract-keywords-jieba",
     "description": "Extract keywords (for SEO, display, etc) on all remark nodes.",
-    "version": "2.0.0",
+    "version": "2.0.2",
     "author": "Eduardo Reveles <me@osiux.ws>",
     "license": "MIT",
     "keywords": [
@@ -16,12 +16,11 @@
     },
     "homepage": "https://github.com/osiux/gatsby-remark-extract-keywords#readme",
     "scripts": {
-        "prebuild": "yarn test",
         "build": "cross-env BABEL_ENV=production babel src --out-dir .",
         "test": "yarn test:lint && yarn test:prettier",
         "test:lint": "eslint --ext .js src",
         "test:prettier": "yarn run:prettier --list-different",
-        "prepublishOnly": "yarn build",
+        "prepublishOnly": "npm run build",
         "run:prettier": "yarn prettier \"**/*.{js,json,md}\"",
         "format": "yarn run:prettier --write"
     },
@@ -31,7 +30,7 @@
         }
     },
     "dependencies": {
-        "natural": "^1.0.2"
+        "nodejieba": "^2.4.1"
     },
     "devDependencies": {
         "@semantic-release/changelog": "^5.0.1",
