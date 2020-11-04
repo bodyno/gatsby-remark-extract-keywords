@@ -1,6 +1,9 @@
 var nodejieba = require('nodejieba');
 
-exports.onCreateNode = ({ node, actions }, { max } = {}) => {
+exports.onCreateNode = (
+    { node, actions },
+    { max, process, afterProcess } = {}
+) => {
     const { createNodeField } = actions;
 
     if (
@@ -12,14 +15,24 @@ exports.onCreateNode = ({ node, actions }, { max } = {}) => {
                 ? node.rawMarkdownBody
                 : node.rawBody;
 
+        let important = [];
+        if (process) {
+            important = process(bodyText);
+        }
+
         const keywords = nodejieba
             .extract(bodyText, max)
             .map(item => item.word);
 
+        let lastKeywords = important.concat(keywords);
+        if (afterProcess) {
+            lastKeywords = afterProcess(lastKeywords);
+        }
+
         createNodeField({
             node,
             name: `keywords`,
-            value: keywords,
+            value: lastKeywords,
         });
     }
 };
